@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   getWeatherData,
   getWeatherDataCityName,
@@ -8,11 +8,11 @@ import Temperature from "./Temperature";
 //icons https://openweathermap.org/img/wn/04n@2x.png
 
 function WeatherData() {
-  const [lat, setLat] = useState("");
-  const [lon, setLon] = useState("");
-  const [city, setCity] = useState("");
+  const [lat, setLat] = useState("40.71");
+  const [lon, setLon] = useState("-74.00");
+  const [city, setCity] = useState("New York");
   const [country, setCountry] = useState("");
-  const [temp, setTemp] = useState("")
+  const [temp, setTemp] = useState("");
   const [useCity, setUseCity] = useState(false);
   const [weatherData, setWeatherData] = useState("");
   const [icon, setIcon] = useState("");
@@ -31,7 +31,7 @@ function WeatherData() {
       response = await getWeatherData(lat, lon);
     }
     console.log(response.main.temp);
-    setTemp(response.main.temp)
+    setTemp(response.main.temp);
     setCity(response.name);
     setCountry(response.sys.country);
     setWeatherData(response.weather[0].description);
@@ -57,19 +57,23 @@ function WeatherData() {
     );
   }
 
+  useEffect(() => {
+    sendApiRequest();
+  }, []);
+
   return (
     <>
       <section className="h-[100vh] bg-blue-100 flex flex-col  items-center gap-[20px] pt-5">
         <div className="flex gap-[40px]">
           <button
             onClick={() => setUseCity(false)}
-            className="p-2 rounded active:bg-blue-200"
+            className="p-2 rounded active:bg-blue-200 focus:outline-non focus:shadow-md focus:shadow-blue-200"
           >
             Weather by Geocoordinate
           </button>
           <button
             onClick={() => setUseCity(true)}
-            className="p-2 rounded active:bg-blue-200"
+            className="p-2 rounded active:bg-blue-200 focus:outline-non focus:shadow-md focus:shadow-blue-200"
           >
             Weather by City Name
           </button>
@@ -104,12 +108,12 @@ function WeatherData() {
               </div>
             </div>
           )}
-          <button onClick={sendApiRequest}>Send request</button>
+          <button onClick={sendApiRequest} className="px-.05 py-1 rounded p-1 active:bg-blue-200 hover:bg-blue-100">Send request</button>
         </div>
         {/* <div className="h-[10vh]">hello
 
             </div> */}
-        <div className="flex flex-col h-[45vh] w-[300px] rounded-2xl p-5 bg-white">
+        <div className="flex flex-col h-[40vh] w-[300px] rounded-2xl p-5 bg-white">
           <div className="flex flex-col gap-[5px] items-center">
             <h2>
               {city}, {country}
@@ -117,9 +121,7 @@ function WeatherData() {
             <p>{weatherData}</p>
             <p>{weatherIcon(icon)}</p>
           </div>
-          <Temperature
-            kelvin="73"
-          />
+          <Temperature kelvin={temp} />
           {/* <div className="flex gap-[20px] justify-center text-center">
                     <div>
                         <p>{temp ?temp : "0"}</p>

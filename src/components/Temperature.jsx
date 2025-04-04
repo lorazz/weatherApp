@@ -28,4 +28,4 @@ function Temperature(props) {
     </>
   );
 }
-export default Temperature();
+export default Temperature;
