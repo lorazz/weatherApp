@@ -8,9 +8,9 @@ import Temperature from "./Temperature";
 //icons https://openweathermap.org/img/wn/04n@2x.png
 
 function WeatherData() {
-  const [lat, setLat] = useState("40.71");
-  const [lon, setLon] = useState("-74.00");
-  const [city, setCity] = useState("New York");
+  const [lat, setLat] = useState("27.97");
+  const [lon, setLon] = useState("153.38");
+  const [city, setCity] = useState("Gold Coast");
   const [country, setCountry] = useState("");
   const [temp, setTemp] = useState("");
   const [useCity, setUseCity] = useState(false);
@@ -30,7 +30,7 @@ function WeatherData() {
     } else {
       response = await getWeatherData(lat, lon);
     }
-    console.log(response.main.temp);
+    console.log(response);
     setTemp(response.main.temp);
     setCity(response.name);
     setCountry(response.sys.country);
@@ -59,6 +59,7 @@ function WeatherData() {
 
   useEffect(() => {
     sendApiRequest();
+
   }, []);
 
   return (
